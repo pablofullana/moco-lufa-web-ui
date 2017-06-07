@@ -23,6 +23,7 @@ export default {
   },
   methods: {
     getStats: function () {
+      alert(process.env.STATS_API_ENDPOINT)
       axios.get(process.env.STATS_API_ENDPOINT).then((response) => {
         this.stats = response.data
       }, (err) => {
