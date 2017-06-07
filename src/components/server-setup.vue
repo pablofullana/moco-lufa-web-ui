@@ -17,7 +17,8 @@ export default {
   data: function () {
     return {
       serverSetup: {
-        'Info': 'Loading server setup...'
+        'Info': 'Loading server setup...',
+        'From': process.env.SERVER_SETUP_API_ENDPOINT
       }
     }
   },
