@@ -17,8 +17,7 @@ export default {
   data: function () {
     return {
       stats: {
-        'Info': 'Loading stats...',
-        'From': process.env.STATS_API_ENDPOINT
+        'Info': 'Loading stats...'
       }
     }
   },
