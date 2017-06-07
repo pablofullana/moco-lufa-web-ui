@@ -2,7 +2,7 @@
 <template lang="html">
   <footer class="footer">
     <div class="container">
-      <div class="content has-text-centered">
+      <div class="content has-text-centered is-small">
         <p>
           <strong>Pimp my mocoLUFA</strong> by <a href="https://yaeltex.com/" target="_blank">Yaeltex</a> in collaboration with <a href="https://github.com/pablofullana" target="_blank">pablofullana</a>
         </p>
