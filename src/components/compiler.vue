@@ -1,15 +1,12 @@
 <!-- compiler -->
 <template lang="html">
   <div id="heading" class="content">
-    <p class="subtitle">Compiler</p>
-    <hr>
-    <p class="is-small">Brief explanation here</p>
-    <p>Brief explanation here</p>
-    <!-- <p class="subtitle">Short description</p> -->
+    <div class="subtitle">Compiler</div>
+    <hr />
     <form v-on:submit.prevent="compile">
       <div class="field is-horizontal">
         <div class="field-label is-small">
-          <label class="label">Device Name</label>
+          <label class="label">Device</label>
         </div>
         <div class="field-body">
           <div class="field">
@@ -22,7 +19,7 @@
 
       <div class="field is-horizontal">
         <div class="field-label is-small">
-          <label class="label">Manufacturer Name</label>
+          <label class="label">Manufacturer</label>
         </div>
         <div class="field-body">
           <div class="field">
@@ -41,7 +38,6 @@
           <p class="control">
             <span class="select is-small">
               <select v-model="arduino_model" name="arduino_model" required>
-                <option value="" selected>Please select one</option>
                 <option value="uno">Uno</option>
                 <option value="mega">Mega</option>
               </select>
@@ -79,7 +75,7 @@ export default {
   },
   methods: {
     compile: function () {
-      axios.post('http://192.168.0.5:3000/api/v1/firmwares', {
+      axios.post(process.env.FIRMWARES_API_ENDPOINT, {
         'firmware': {
           'name': this.name,
           'manufacturer': this.manufacturer,

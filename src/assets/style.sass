@@ -1,0 +1,29 @@
+// 1. Import the initial variables
+// @import "../sass/utilities/initial-variables"
+@import "../../node_modules/bulma/sass/utilities/initial-variables.sass"
+
+// 2. Set your own initial variables
+// Update blue
+$blue: #72d0eb
+$blue-invert: #fff
+// Add a serif family
+$family-serif: 'Avenir', Helvetica, Arial, sans-serif
+
+// 3. Set the derived variables
+// Use the new pink as the primary color
+$primary: $blue
+$primary-invert: $blue-invert
+// Use the new serif family
+$family-primary: $family-serif
+
+// 4. Import the rest of Bulma
+@import "../../node_modules/bulma/bulma.sass"
+
+a.geek
+  text-decoration: none !important
+  font-size: small
+
+footer
+  padding: 30px !important
+  i
+    color: $text

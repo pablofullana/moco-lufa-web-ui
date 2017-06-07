@@ -1,10 +1,10 @@
 <!-- stats -->
 <template lang="html">
   <div id="heading" class="content">
-    <p class="subtitle">Stats</p>
-    <hr>
+    <div class="subtitle">Stats</div>
+    <hr />
     <div v-for="(value, key) in stats">
-      <small><strong>{{ key }}:</strong> {{ value }}</small>
+      <small>[-] <strong>{{ key }}:</strong> {{ value }}</small>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     getStats: function () {
-      axios.get('http://192.168.0.5:3000/api/v1/stats').then((response) => {
+      axios.get(process.env.STATS_API_ENDPOINT).then((response) => {
         this.stats = response.data
       }, (err) => {
         console.log(err)

@@ -1,10 +1,10 @@
 <!-- server-setup -->
 <template lang="html">
   <div id="heading" class="content">
-    <p class="subtitle">Server Setup</p>
-    <hr>
+    <div class="subtitle">Server Setup</div>
+    <hr />
     <div v-for="(value, key) in serverSetup">
-      <small><strong>{{ key }}:</strong> {{ value }}</small>
+      <small>[-] <strong>{{ key }}:</strong> {{ value }}</small>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
   },
   methods: {
     getServerSetup: function () {
-      axios.get('http://192.168.0.5:3000/api/v1/server_setup').then((response) => {
+      axios.get(process.env.SERVER_SETUP_API_ENDPOINT).then((response) => {
         this.serverSetup = response.data
       }, (err) => {
         console.log(err)
