@@ -53,33 +53,33 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <input class="button is-primary is-small" type="submit" value="Compile" :disabled="compilationProcess.status == 'inProgress'"/>
+              <input class="button is-primary is-small" type="submit" value="Compile" v-bind:class="{ 'is-loading': status == 'isCompiling' }" />
             </div>
           </div>
         </div>
       </div>
 
-      <div class="field is-horizontal" v-if="compilationProcess.status === 'succeed'">
+      <div class="field is-horizontal" v-if="status === 'succeed'">
         <div class="field-label is-small">
           <label class="label">Summary</label>
         </div>
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <small>{{ compilationProcess.summary }}</small>
+              <small>{{ summary }}</small>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="field is-horizontal" v-if="compilationProcess.status === 'failed'">
+      <div class="field is-horizontal" v-if="status === 'failed'">
         <div class="field-label is-small">
           <label class="label">Error</label>
         </div>
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <small>{{ compilationProcess.summary }}</small>
+              <small>{{ summary }}</small>
             </div>
           </div>
         </div>
@@ -95,19 +95,20 @@ export default {
   name: 'compiler',
   data: function () {
     return {
-      compilationProcess: {
-        status: '',
-        hex: '',
-        summary: ''
-      }
+      name: '',
+      manufacturer: '',
+      arduino_model: '',
+      status: '',
+      hex: '',
+      summary: ''
     }
   },
   methods: {
     compile: function () {
       var startedAtTime = new Date().getTime()
-      this.compilationProcess.status = 'inProgress'
-      this.compilationProcess.hex = ''
-      this.compilationProcess.summary = ''
+      this.status = 'isCompiling'
+      this.hex = ''
+      this.summary = ''
       axios.post(process.env.FIRMWARES_API_ENDPOINT, {
         'firmware': {
           'name': this.name,
@@ -117,18 +118,18 @@ export default {
       }).then((response) => {
         var totalTime = new Date().getTime() - startedAtTime
         var totalSeconds = (totalTime / 1000).toFixed(2)
-        this.compilationProcess.status = 'succeed'
-        this.compilationProcess.hex = response.data
-        this.compilationProcess.summary = String.concat('Compiled successfully in ', totalSeconds, ' seconds.')
-        this.download(this.name, this.compilationProcess.hex)
+        this.status = 'succeed'
+        this.hex = response.data
+        this.summary = 'Compiled successfully in ' + totalSeconds + ' seconds.'
+        this.download(this.name, this.hex)
       }, (err) => {
-        this.compilationProcess.status = 'failed'
-        this.compilationProcess.hex = ''
-        this.compilationProcess.summary = String.concat(err.response.status, ': ', err.response.statusText)
+        this.status = 'failed'
+        this.hex = ''
+        this.summary = err.response.status + ': ' + err.response.statusText
       })
     },
     download: function (name, fileContent) {
-      var filename = String.toLowerCase(name.replace(/[^\w]/gi, '_'))
+      var filename = name.replace(/[^\w]/gi, '_').toLowerCase()
       var blob = new Blob([fileContent], { type: 'text/plain' })
       var URL = window.URL || window.webkitURL
       var downloadUrl = URL.createObjectURL(blob)
@@ -139,7 +140,7 @@ export default {
         window.location = downloadUrl
       } else {
         a.href = downloadUrl
-        a.download = String.concat(filename, '.hex')
+        a.download = filename + '.hex'
         document.body.appendChild(a)
         a.click()
       }
