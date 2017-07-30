@@ -1,6 +1,10 @@
 {
   "name": "moco_lufa_web_ui",
   "version": "1.0.0",
+  "engines": {
+    "node": ">= 4.0.0",
+    "npm": ">= 3.0.0"
+  },
   "description": "MocoLUFA Web App UI",
   "author": "pablofullana <pablofullana@gmail.com>",
   "private": true,
@@ -86,10 +90,6 @@
     "webpack-dev-middleware": "^1.10.0",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-merge": "^4.1.0"
-  },
-  "engines": {
-    "node": ">= 4.0.0",
-    "npm": ">= 3.0.0"
   },
   "browserslist": [
     "> 1%",
