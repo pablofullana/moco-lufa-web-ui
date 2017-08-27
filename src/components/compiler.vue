@@ -30,6 +30,23 @@
         </div>
       </div>
 
+      <div class="field is-horizontal has-addons">
+        <div class="field-label is-small">
+          <label class="label">PID</label>
+        </div>
+        <div class="field-body">
+          <div class="field">
+            <div class="control">
+              <input v-model="pid" class="input is-small" name="pid" placeholder="Product ID"
+                required
+                v-validate="{ rules: { regex: /^0x(1|2|3|4|5|6|7|8|9|a|b|c|d|e|f)(0|1|2|3|4|5|6|7|8|9|a|b|c|d|e|f){3}$/i} }"
+              >
+              <p class="help">Product ID. Hex number between 0x1000 and 0xffff.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="field is-horizontal">
         <div class="field-label is-small">
           <label class="label">Arduino Model</label>
@@ -66,7 +83,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <small>{{ summary }}</small>
+              <p class="help is-success">{{ summary }}</p>
             </div>
           </div>
         </div>
@@ -79,7 +96,7 @@
         <div class="field-body">
           <div class="field">
             <div class="control">
-              <small>{{ summary }}</small>
+              <p class="help is-danger">{{ summary }}</p>
             </div>
           </div>
         </div>
@@ -91,6 +108,9 @@
 <script>
 import axios from 'axios'
 
+var _ = require('lodash')
+var sprintf = require('sprintf-js').sprintf
+
 export default {
   name: 'compiler',
   data: function () {
@@ -98,6 +118,7 @@ export default {
       name: '',
       manufacturer: '',
       arduino_model: '',
+      pid: sprintf('0x%.4x', _.random(4096, 65535)),
       status: '',
       hex: '',
       summary: ''
@@ -113,7 +134,8 @@ export default {
         'firmware': {
           'name': this.name,
           'manufacturer': this.manufacturer,
-          'arduino_model': this.arduino_model
+          'arduino_model': this.arduino_model,
+          'pid': this.pid
         }
       }).then((response) => {
         var totalTime = new Date().getTime() - startedAtTime
@@ -125,7 +147,7 @@ export default {
       }, (err) => {
         this.status = 'failed'
         this.hex = ''
-        this.summary = err.response.status + ': ' + err.response.statusText
+        this.summary = err.response.status + ': ' + err.response.statusText + ' - ' + err.response.data.errors_sentence
       })
     },
     download: function (name, fileContent) {

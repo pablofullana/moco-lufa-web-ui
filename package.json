@@ -21,8 +21,11 @@
   "dependencies": {
     "axios": "^0.16.2",
     "bulma": "^0.4.2",
+    "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
     "sass-loader": "^6.0.5",
+    "sprintf-js": "^1.1.1",
+    "vee-validate": "^2.0.0-rc.14",
     "vue": "^2.3.3",
     "vue-bulma-modal": "^1.0.1",
     "vue-clipboard2": "^0.0.6",
