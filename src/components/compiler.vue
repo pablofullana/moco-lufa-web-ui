@@ -41,7 +41,7 @@
                 required
                 v-validate="{ rules: { regex: /^0x(1|2|3|4|5|6|7|8|9|a|b|c|d|e|f)(0|1|2|3|4|5|6|7|8|9|a|b|c|d|e|f){3}$/i} }"
               >
-              <p class="help">Product ID. Hex number between 0x1000 and 0xffff.</p>
+              <p class="help">Product ID. Random generated 4-digit hex number between 0x1000 and 0xFFF. This feature prevents the computer from confusing devices with different names, but same PID. Manually modifiable by user.</p>
             </div>
           </div>
         </div>
